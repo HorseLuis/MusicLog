@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Music Log</string>
+    <string name="add_album">Añadir álbum</string>
+    <string name="search_album">Buscar Álbum…</string>
+    <string name="search_icon">Icono de buscar</string>
+    <string name="clean">Limpiar</string>
+    <string name="add_to_albums">Agregar a Mis Albums</string>
+    <string name="remove_from_albums">Eliminar de Mis Albums</string>
+    <string name="removed_album">Eliminado de Mis Albums</string>
+    <string name="preference_all">Todo</string>
+    <string name="preference_like">Me gusta</string>
+    <string name="added_like">Añadido: Me gusta</string>
+    <string name="preference_dislike">No me gusta</string>
+    <string name="added_dislike">Añadido a No me gusta</string>
+    <string name="preference_indif">Indiferente</string>
+    <string name="added_indif">Añadido a Indiferente</string>
+    <string name="preference_pending">Pendiente</string>
+    <string name="added_to_pending">Añadido a Pendientes</string>
+    <string name="new_album">Nuevo Álbum</string>
+    <string name="add_cover">Añadir portada</string>
+    <string name="change">Cambiar</string>
+    <string name="album_name">Nombre del álbum</string>
+    <string name="artist_name">Nombre del artista</string>
+    <string name="your_preference">Tu preferencia</string>
+    <string name="save_album">Guardar álbum</string>
+</resources>
