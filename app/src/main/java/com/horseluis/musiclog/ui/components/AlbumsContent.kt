@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -140,12 +141,13 @@ fun AlbumsContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 FilterChip(
                     selected = uiState.searchMode == SearchMode.REMOTE,
                     onClick = { viewModel.onSearchModeChanged(SearchMode.REMOTE) },
-                    label = { Text("Remoto") },
+                    label = { Text(stringResource(R.string.remote)) },
                     leadingIcon = if (uiState.searchMode == SearchMode.REMOTE) {
                         { Icon(Icons.Default.Cloud, contentDescription = null, modifier = Modifier.size(18.dp)) }
                     } else null
@@ -153,11 +155,19 @@ fun AlbumsContent(
                 FilterChip(
                     selected = uiState.searchMode == SearchMode.LOCAL,
                     onClick = { viewModel.onSearchModeChanged(SearchMode.LOCAL) },
-                    label = { Text("Local") },
+                    label = { Text(stringResource(R.string.local)) },
                     leadingIcon = if (uiState.searchMode == SearchMode.LOCAL) {
                         { Icon(Icons.Default.Storage, contentDescription = null, modifier = Modifier.size(18.dp)) }
                     } else null
                 )
+                if (uiState.searchMode == SearchMode.LOCAL) {
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(
+                        text = stringResource(R.string.album_count, uiState.albums.size),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                }
             }
 
             LazyColumn(

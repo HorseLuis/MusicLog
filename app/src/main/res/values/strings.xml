@@ -23,4 +23,7 @@
     <string name="artist_name">Nombre del artista</string>
     <string name="your_preference">Tu preferencia</string>
     <string name="save_album">Guardar álbum</string>
+    <string name="album_count">%1$d elementos</string>
+    <string name="local">Local</string>
+    <string name="remote">Remoto</string>
 </resources>
