@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -96,13 +97,18 @@ fun AlbumRowItem(
                     }
                 },
                 leadingContent = {
-                    AsyncImage(
-                        model = album.imageUrl,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(90.dp)
-                            .clip(RoundedCornerShape(12.dp))
-                    )
+                    Box(
+                        modifier = Modifier.fillMaxHeight(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        AsyncImage(
+                            model = album.imageUrl,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(90.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                        )
+                    }
                 },
                 colors = ListItemDefaults.colors(containerColor = Color.Transparent)
             )
