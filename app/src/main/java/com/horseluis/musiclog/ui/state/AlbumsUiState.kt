@@ -1,4 +1,7 @@
-package com.horseluis.musiclog.domain.model
+package com.horseluis.musiclog.ui.state
+
+import com.horseluis.musiclog.domain.model.Album
+import com.horseluis.musiclog.domain.model.AlbumPreference
 
 enum class SearchMode {
     REMOTE, LOCAL

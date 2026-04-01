@@ -1,10 +1,14 @@
 package com.horseluis.musiclog.data.repository
 
+import com.horseluis.musiclog.BuildConfig
 import com.horseluis.musiclog.data.local.AlbumDao
 import com.horseluis.musiclog.data.local.AlbumEntity
+import com.horseluis.musiclog.data.network.ApiService
 import com.horseluis.musiclog.domain.model.Album
+import com.horseluis.musiclog.data.model.AlbumDto
 import com.horseluis.musiclog.domain.model.AlbumPreference
-import com.horseluis.musiclog.domain.model.SearchMode
+import com.horseluis.musiclog.data.model.Image
+import com.horseluis.musiclog.ui.state.SearchMode
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -14,11 +18,13 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import java.util.Collections
 
 class AlbumRepository(
-    private val api: AlbumApiService,
-    private val dao: AlbumDao
+    private val apiService: ApiService,
+    private val dao: AlbumDao,
 ) {
+    private val defaultCover = "https://dummyimage.com/100.png&text=Album"
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     fun searchAlbums(
@@ -54,17 +60,18 @@ class AlbumRepository(
                         }
                 } else {
                     flow {
-                        val apiResults = api.searchAlbums(query).results
+                        val apiResults = searchAlbums(query)
                         emit(apiResults)
                     }.combine(dao.observeAll()) { apiResults, savedAlbums ->
                         val savedMap = savedAlbums.associateBy { it.id }
                         apiResults.map { dto ->
-                            val saved = savedMap[dto.collectionId]
+                            val saved = savedMap[dto.mbid]
                             Album(
-                                id = dto.collectionId,
-                                name = dto.collectionName,
-                                artist = dto.artistName,
-                                imageUrl = dto.artworkUrl100,
+                                id = dto.mbid,
+                                name = dto.name,
+                                artist = dto.artist,
+                                imageUrl = getImageUrl(dto.image)
+                                    ?: defaultCover,
                                 preference = saved?.let {
                                     AlbumPreference.valueOf(it.preference)
                                 }
@@ -73,6 +80,31 @@ class AlbumRepository(
                     }
                 }
             }
+        }
+    }
+
+    private fun getImageUrl(images: List<Image>): String? {
+        val sizeOrder = listOf("large", "medium", "small")
+        return sizeOrder
+            .mapNotNull { size ->
+                images.find { it.size == size }?.text
+            }
+            .firstOrNull {
+                it.isNotBlank()
+            }?.ifBlank { null }
+    }
+
+    private suspend fun searchAlbums(query: String): List<AlbumDto> {
+        val apiKey = BuildConfig.API_KEY
+        val response = apiService.searchAlbums(
+            album = query,
+            apiKey = apiKey
+        )
+        return if (response.isSuccessful) {
+            response.body()?.results?.albummatches?.album
+                ?: Collections.emptyList()
+        } else {
+            Collections.emptyList()
         }
     }
 

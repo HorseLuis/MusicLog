@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.horseluis.musiclog.data.local.AppDatabase
 import com.horseluis.musiclog.data.repository.AlbumRepository
-import com.horseluis.musiclog.data.repository.RetrofitInstance
+import com.horseluis.musiclog.data.network.RetrofitClient
 import com.horseluis.musiclog.ui.components.AlbumsContent
 import com.horseluis.musiclog.ui.theme.MusicLogTheme
 import com.horseluis.musiclog.ui.viewmodel.AlbumsViewModel
@@ -28,7 +28,7 @@ class AlbumsScreen : ComponentActivity() {
         ).build()
 
         val repository = AlbumRepository(
-            RetrofitInstance.api,
+            RetrofitClient.apiService,
             db.albumDao()
         )
 

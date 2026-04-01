@@ -1,15 +1,14 @@
 package com.horseluis.musiclog.ui.viewmodel
 
 import android.app.Application
-import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.horseluis.musiclog.data.repository.AlbumRepository
 import com.horseluis.musiclog.domain.model.Album
 import com.horseluis.musiclog.domain.model.AlbumPreference
-import com.horseluis.musiclog.domain.model.AlbumsUiState
-import com.horseluis.musiclog.domain.model.ModalState
-import com.horseluis.musiclog.domain.model.SearchMode
+import com.horseluis.musiclog.ui.state.AlbumsUiState
+import com.horseluis.musiclog.ui.state.ModalState
+import com.horseluis.musiclog.ui.state.SearchMode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,6 +22,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import androidx.core.net.toUri
+import java.util.UUID
 
 class AlbumsViewModel(
     application: Application,
@@ -134,7 +134,7 @@ class AlbumsViewModel(
             val localPath = saveImageLocally(imageUri)
 
             val album = Album(
-                id = System.currentTimeMillis(),
+                id = UUID.randomUUID().toString(),
                 name = name,
                 artist = artist,
                 imageUrl = localPath,

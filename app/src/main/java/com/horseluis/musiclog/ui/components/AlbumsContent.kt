@@ -40,8 +40,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.horseluis.musiclog.R
 import com.horseluis.musiclog.domain.model.AlbumPreference
-import com.horseluis.musiclog.domain.model.ModalState
-import com.horseluis.musiclog.domain.model.SearchMode
+import com.horseluis.musiclog.ui.state.ModalState
+import com.horseluis.musiclog.ui.state.SearchMode
 import com.horseluis.musiclog.domain.model.color
 import com.horseluis.musiclog.domain.model.displayText
 import com.horseluis.musiclog.domain.model.icon

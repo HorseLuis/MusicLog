@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.horseluis.musiclog.R
 import com.horseluis.musiclog.domain.model.Album
 import com.horseluis.musiclog.domain.model.AlbumPreference
-import com.horseluis.musiclog.domain.model.ModalState
+import com.horseluis.musiclog.ui.state.ModalState
 import com.horseluis.musiclog.ui.viewmodel.AlbumsViewModel
 import kotlinx.coroutines.launch
 

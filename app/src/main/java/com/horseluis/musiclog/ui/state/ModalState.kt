@@ -1,4 +1,4 @@
-package com.horseluis.musiclog.domain.model
+package com.horseluis.musiclog.ui.state
 
 
 sealed class ModalState {

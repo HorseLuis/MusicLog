@@ -1,17 +1,16 @@
-package com.horseluis.musiclog.data.repository
+package com.horseluis.musiclog.data.network
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitInstance {
+object RetrofitClient {
+    private const val BASE_URL = "https://ws.audioscrobbler.com/"
 
-    private const val BASE_URL = "https://itunes.apple.com/"
-
-    val api: AlbumApiService by lazy {
+    val apiService: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(AlbumApiService::class.java)
+            .create(ApiService::class.java)
     }
 }
