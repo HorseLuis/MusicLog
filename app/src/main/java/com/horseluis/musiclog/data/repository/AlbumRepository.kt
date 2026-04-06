@@ -3,11 +3,11 @@ package com.horseluis.musiclog.data.repository
 import com.horseluis.musiclog.BuildConfig
 import com.horseluis.musiclog.data.local.AlbumDao
 import com.horseluis.musiclog.data.local.AlbumEntity
+import com.horseluis.musiclog.data.model.AlbumDto
+import com.horseluis.musiclog.data.model.Image
 import com.horseluis.musiclog.data.network.ApiService
 import com.horseluis.musiclog.domain.model.Album
-import com.horseluis.musiclog.data.model.AlbumDto
 import com.horseluis.musiclog.domain.model.AlbumPreference
-import com.horseluis.musiclog.data.model.Image
 import com.horseluis.musiclog.ui.state.SearchMode
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.util.Collections
+import java.util.UUID
 
 class AlbumRepository(
     private val apiService: ApiService,
@@ -60,7 +61,13 @@ class AlbumRepository(
                         }
                 } else {
                     flow {
-                        val apiResults = searchAlbums(query)
+                        val apiResults = searchAlbums(query).map {
+                            it.copy(
+                                mbid = it.mbid.ifEmpty {
+                                    UUID.randomUUID().toString()
+                                }
+                            )
+                        }
                         emit(apiResults)
                     }.combine(dao.observeAll()) { apiResults, savedAlbums ->
                         val savedMap = savedAlbums.associateBy { it.id }
