@@ -26,4 +26,15 @@
     <string name="album_count">%1$d elementos</string>
     <string name="local">Local</string>
     <string name="remote">Remoto</string>
+    <string name="menu">Menu</string>
+    <string name="settings">Ajustes</string>
+    <string name="back">Volver</string>
+    <string name="export_title">Exportar datos</string>
+    <string name="export_content">Guardar tus datos a un fichero en la memoria de tu dispositivo</string>
+    <string name="export_ok">Datos exportados correctamente</string>
+    <string name="export_error">Error al exportar</string>
+    <string name="import_title">Importar datos</string>
+    <string name="import_content">Restaurar datos desde un archivo JSON local</string>
+    <string name="import_ok">Datos importados correcrtamente</string>
+    <string name="import_error">Error al importar</string>
 </resources>

@@ -141,4 +141,12 @@ class AlbumRepository(
     suspend fun removeFromMyAlbums(album: Album) {
         dao.delete(album.id)
     }
+
+    suspend fun getAllLocalAlbums(): List<AlbumEntity> {
+        return dao.getAll()
+    }
+
+    suspend fun importAlbums(albums: List<AlbumEntity>) {
+        dao.insertAll(albums)
+    }
 }

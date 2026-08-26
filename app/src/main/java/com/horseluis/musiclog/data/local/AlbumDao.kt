@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.Flow
 interface AlbumDao {
 
     @Query("SELECT * FROM my_albums")
+    suspend fun getAll(): List<AlbumEntity>
+
+    @Query("SELECT * FROM my_albums")
     fun observeAll(): Flow<List<AlbumEntity>>
 
     @Query("""
@@ -26,6 +29,9 @@ interface AlbumDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(album: AlbumEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(albums: List<AlbumEntity>)
 
     @Query("DELETE FROM my_albums WHERE id = :id")
     suspend fun delete(id: String)

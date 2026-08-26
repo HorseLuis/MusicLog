@@ -9,11 +9,12 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.Room
+import com.horseluis.musiclog.R
 import com.horseluis.musiclog.data.local.AppDatabase
-import com.horseluis.musiclog.data.repository.AlbumRepository
 import com.horseluis.musiclog.data.network.RetrofitClient
+import com.horseluis.musiclog.data.repository.AlbumRepository
 import com.horseluis.musiclog.ui.components.AlbumsContent
+import com.horseluis.musiclog.ui.state.SearchMode
 import com.horseluis.musiclog.ui.theme.MusicLogTheme
 import com.horseluis.musiclog.ui.viewmodel.AlbumsViewModel
 
@@ -21,11 +22,10 @@ class AlbumsScreen : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val db = Room.databaseBuilder(
-            applicationContext,
-            AppDatabase::class.java,
-            "albums_db"
-        ).build()
+        val modeString = intent.getStringExtra("SEARCH_MODE") ?: getString(R.string.local)
+        val initialMode = SearchMode.valueOf(modeString)
+
+        val db = AppDatabase.getDatabase(this)
 
         val repository = AlbumRepository(
             RetrofitClient.apiService,
@@ -43,6 +43,7 @@ class AlbumsScreen : ComponentActivity() {
                 }
             }
         )[AlbumsViewModel::class.java]
+        viewModel.onSearchModeChanged(initialMode)
 
         setContent {
             MusicLogTheme {
@@ -56,5 +57,3 @@ class AlbumsScreen : ComponentActivity() {
         }
     }
 }
-
-
